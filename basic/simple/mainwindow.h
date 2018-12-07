@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QSystemTrayIcon>
 #include <QMainWindow>
 #include "stuff.h"
 
@@ -24,6 +25,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QVector<Stuff*> stuffs;
+
+    QSystemTrayIcon* trayIcon;
 };
 
 #endif // MAINWINDOW_H
