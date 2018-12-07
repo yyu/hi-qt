@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "stuff.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,8 +19,11 @@ public:
 private slots:
     void on_qDebugButton_clicked();
 
+    void on_addStuffButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QVector<Stuff*> stuffs;
 };
 
 #endif // MAINWINDOW_H
