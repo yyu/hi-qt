@@ -1,23 +1,8 @@
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
-
-#include <QSystemTrayIcon>
-#include <QtGui>
-
 #include <QAction>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QGroupBox>
-#include <QLabel>
-#include <QLineEdit>
-#include <QMenu>
-#include <QPushButton>
-#include <QSpinBox>
-#include <QTextEdit>
-#include <QVBoxLayout>
-#include <QMessageBox>
-
-#include "mainwindow.h"
+#include <QSystemTrayIcon>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,23 +11,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->clickToQuitButton, &QPushButton::clicked, QApplication::instance(), &QApplication::quit);
 
-    iconComboBox = new QComboBox;
-    iconComboBox->addItem(QIcon(":/images/bad.png"), tr("Bad"));
+    QIcon icon = QIcon(":/images/lighton80.png");
+    setWindowIcon(icon);
 
-    minimizeAction = new QAction(tr("Mi&nimize"), this);
-    trayIconMenu = new QMenu(this);
+    QAction* minimizeAction = new QAction(tr("Mi&nimize"), this);
+
     trayIcon = new QSystemTrayIcon(this);
 
+    QMenu* trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(minimizeAction);
     trayIconMenu->addSeparator();
 
-    QIcon icon = iconComboBox->itemIcon(0);
-    setWindowIcon(icon);
-
     trayIcon->setIcon(icon);
-    trayIcon->setToolTip(iconComboBox->itemText(0));
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setVisible(true);
     trayIcon->show();
 }
 
@@ -56,9 +37,7 @@ void MainWindow::on_qDebugButton_clicked()
     static int i = 0;
     char s[1024];
     sprintf(s, "\033[32mthe button was clicked\033[1G %d\033[0m", i++);
-    qDebug() << s;
-    qDebug() << QSystemTrayIcon::isSystemTrayAvailable();
-    qDebug() << trayIcon->isVisible();
+    qDebug() << s << QSystemTrayIcon::isSystemTrayAvailable() << trayIcon->isVisible();
 }
 
 void MainWindow::on_addStuffButton_clicked()
