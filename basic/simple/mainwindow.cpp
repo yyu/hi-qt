@@ -15,13 +15,19 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(icon);
 
     QAction* minimizeAction = new QAction(tr("Mi&nimize"), this);
-
-    trayIcon = new QSystemTrayIcon(this);
+    QAction* restoreAction = new QAction(tr("&Restore"), this);
+    QAction* quitAction = new QAction(tr("&Quit"), this);
+    connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
+    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     QMenu* trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addAction(quitAction);
     trayIconMenu->addSeparator();
 
+    trayIcon = new QSystemTrayIcon(this);
     trayIcon->setIcon(icon);
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->show();
