@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QSystemTrayIcon>
 
 class Dialog : public QDialog
 {
@@ -10,6 +11,9 @@ class Dialog : public QDialog
 public:
     Dialog(QWidget *parent = 0);
     ~Dialog();
+
+private:
+    QSystemTrayIcon* trayIcon;
 };
 
 #endif // DIALOG_H
