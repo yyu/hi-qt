@@ -34,6 +34,7 @@ static bool do_curl(const char * url, const char * payload)
 
     CURL * curl = curl_easy_init(); /* get a curl handle */
     if(curl) {
+        curl_easy_setopt(curl, CURLOPT_TIMEOUT, 3L); /* timeout: 3s */
         curl_easy_setopt(curl, CURLOPT_READFUNCTION, read_callback);
         curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L); /* enable uploading */
         curl_easy_setopt(curl, CURLOPT_PUT, 1L); /* HTTP PUT please */
@@ -78,6 +79,9 @@ void HueSwitch::switchOff()
 HueSwitch::HueSwitch(QWidget *parent) :
     QDialog(parent)
 {
+    qDebug() << "starting ...";
+
+    iconMap["__"] = QIcon(":/images/bulb.png");
     iconMap["on"] = QIcon(":/images/table-light-white.png");
     iconMap["off"] = QIcon(":/images/table-light-black.png");
 
@@ -97,10 +101,12 @@ HueSwitch::HueSwitch(QWidget *parent) :
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setIcon(iconMap["__"]);
+    trayIcon->show();
 
     switchOn();
 
-    trayIcon->show();
+    qDebug() << "started";
 }
 
 HueSwitch::~HueSwitch()
